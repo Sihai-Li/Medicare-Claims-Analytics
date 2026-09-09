@@ -1,0 +1,26 @@
+# Raw CMS downloads are reproducible and too large for GitHub.
+data/raw/*
+!data/raw/README.md
+
+# Generated databases and processed extracts.
+data/processed/*
+!data/processed/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+
+# Python artifacts.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local editor settings.
+.vscode/
+.idea/
+
+# Operating system files.
+.DS_Store
+Thumbs.db

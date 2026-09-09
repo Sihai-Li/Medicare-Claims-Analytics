@@ -1,0 +1,52 @@
+# CMS synthetic Medicare data profile
+
+Generated: 2026-09-09 15:58 UTC
+
+## Overview
+
+- CSV source files: 19
+- Total source rows: 2,491,297
+- Unique beneficiaries across enrollment files: 10,000
+- Claims service-date coverage: 2014-11-18 through 2023-03-03
+- ZIP archives inspected: 2
+
+## Dataset inventory
+
+| file | dataset | grain | size_mb | rows | columns | unique_beneficiaries | record_id_field | unique_records | rows_per_record | service_date_min | service_date_max | unmatched_beneficiary_ids |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| beneficiary_2015.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.15 | 5975 | 185 | 5975 | BENE_ID | 5975 | 1.0 |  |  | 0 |
+| beneficiary_2016.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.31 | 6288 | 185 | 6288 | BENE_ID | 6288 | 1.0 |  |  | 0 |
+| beneficiary_2017.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.48 | 6613 | 185 | 6613 | BENE_ID | 6613 | 1.0 |  |  | 0 |
+| beneficiary_2018.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.69 | 7002 | 185 | 7002 | BENE_ID | 7002 | 1.0 |  |  | 0 |
+| beneficiary_2019.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.92 | 7446 | 185 | 7446 | BENE_ID | 7446 | 1.0 |  |  | 0 |
+| beneficiary_2020.csv | Master Beneficiary Summary | one beneficiary per reference year | 4.13 | 7837 | 185 | 7837 | BENE_ID | 7837 | 1.0 |  |  | 0 |
+| beneficiary_2021.csv | Master Beneficiary Summary | one beneficiary per reference year | 4.34 | 8246 | 185 | 8246 | BENE_ID | 8246 | 1.0 |  |  | 0 |
+| beneficiary_2022.csv | Master Beneficiary Summary | one beneficiary per reference year | 4.56 | 8671 | 185 | 8671 | BENE_ID | 8671 | 1.0 |  |  | 0 |
+| beneficiary_2023.csv | Master Beneficiary Summary | one beneficiary per reference year | 4.84 | 9179 | 185 | 9179 | BENE_ID | 9179 | 1.0 |  |  | 0 |
+| beneficiary_2024.csv | Master Beneficiary Summary | one beneficiary per reference year | 5.09 | 9660 | 185 | 9660 | BENE_ID | 9660 | 1.0 |  |  | 0 |
+| beneficiary_2025.csv | Master Beneficiary Summary | one beneficiary per reference year | 3.17 | 10000 | 185 | 10000 | BENE_ID | 10000 | 1.0 |  |  | 0 |
+| carrier.csv | Carrier | professional-service claim line | 443.66 | 1121004 | 96 | 7971 | CLM_ID | 90705 | 12.36 | 2015-03-06 | 2023-03-02 | 0 |
+| dme.csv | Durable Medical Equipment | DME claim line | 36.49 | 103828 | 87 | 5576 | CLM_ID | 37782 | 2.75 | 2015-01-08 | 2023-03-02 | 0 |
+| hha.csv | Home Health Agency | home-health claim line | 2.09 | 6215 | 88 | 449 | CLM_ID | 493 | 12.61 | 2015-03-09 | 2023-03-01 | 0 |
+| hospice.csv | Hospice | hospice claim line | 4.38 | 12107 | 86 | 1086 | CLM_ID | 1086 | 11.15 | 2014-11-18 | 2023-02-27 | 0 |
+| inpatient (1).csv | Inpatient | inpatient claim line | 33.89 | 58066 | 197 | 5699 | CLM_ID | 20867 | 2.78 | 2015-02-25 | 2023-03-02 | 0 |
+| outpatient.csv | Outpatient | outpatient claim line | 320.09 | 575092 | 162 | 8591 | CLM_ID | 402653 | 1.43 | 2015-03-06 | 2023-03-02 | 0 |
+| pde.csv | Part D Event | prescription drug event | 86.75 | 515520 | 36 | 7403 | PDE_ID | 515520 | 1.0 | 2015-03-08 | 2023-03-03 | 0 |
+| snf.csv | Skilled Nursing Facility | SNF claim line | 9.49 | 12548 | 160 | 1466 | CLM_ID | 1632 | 7.69 | 2015-01-08 | 2023-03-01 | 0 |
+
+## Initial quality findings
+
+- All source files use the pipe (`|`) delimiter.
+- Identifiers and coded fields must be loaded as text to preserve leading zeros.
+- Claim files contain service lines, so row counts are not claim counts; use distinct `CLM_ID`.
+- Claim-level payment and charge values may repeat across lines and must be deduplicated before aggregation.
+- 2023 claims are partial because the available service dates end in early March 2023.
+- Synthetic results demonstrate methods and should not be interpreted as real Medicare population estimates.
+
+## Generated artifacts
+
+- `dataset_profile.csv`: dataset-level size, grain, dates, and identifiers.
+- `column_profile.csv`: completeness and sample cardinality for every source field.
+- `archive_profile.csv`: ZIP member inventory and CRC validation.
+- `../docs/data_dictionary.csv`: curated fields for the planned analytical model.
+- `../docs/data_dictionary.md`: human-readable version of the curated dictionary.

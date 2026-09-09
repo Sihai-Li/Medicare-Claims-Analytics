@@ -1,0 +1,54 @@
+column_name,field_role,plain_language_definition,analysis_note,available_in
+BENE_BIRTH_DT,date,Beneficiary date of birth.,Parse as date,Master Beneficiary Summary
+BENE_DEATH_DT,date,Beneficiary date of death when present.,Parse as date,Master Beneficiary Summary
+BENE_ENROLLMT_REF_YR,date,Reference year for the beneficiary enrollment record.,Parse as date,Master Beneficiary Summary
+CLM_ADMSN_DT,date,Inpatient admission date.,Parse as date,Home Health Agency; Inpatient; Skilled Nursing Facility
+CLM_FROM_DT,date,First service date represented by the claim.,Parse as date,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+CLM_THRU_DT,date,Last service date represented by the claim.,Parse as date,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+NCH_BENE_DSCHRG_DT,date,Beneficiary discharge date recorded on the claim.,Parse as date,Hospice; Inpatient; Skilled Nursing Facility
+SRVC_DT,date,Date of the Part D prescription drug event.,Parse as date,Part D Event
+ADMTG_DGNS_CD,diagnosis,Diagnosis code recorded at admission.,Keep as text,Inpatient; Skilled Nursing Facility
+ICD_DGNS_CD1,diagnosis,First additional diagnosis code.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+PRNCPAL_DGNS_CD,diagnosis,Principal diagnosis code for the claim.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+AGE_AT_END_REF_YR,dimension,Age at the end of the beneficiary reference year.,Keep as text,Master Beneficiary Summary
+BENE_RACE_CD,dimension,CMS beneficiary race code.,Keep as text,Master Beneficiary Summary
+BRND_GNRC_CD,dimension,Brand-versus-generic drug indicator.,Keep as text,Part D Event
+COUNTY_CD,dimension,Beneficiary county code.,Keep as text,Master Beneficiary Summary
+ENTLMT_RSN_CURR,dimension,Current reason for Medicare entitlement.,Keep as text,Master Beneficiary Summary
+ENTLMT_RSN_ORIG,dimension,Original reason for Medicare entitlement.,Keep as text,Master Beneficiary Summary
+ESRD_IND,dimension,End-stage renal disease indicator.,Keep as text,Master Beneficiary Summary
+ORG_NPI_NUM,dimension,Organization National Provider Identifier.,Keep as text,Carrier; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+PRVDR_NUM,dimension,CMS provider number on an institutional claim.,Keep as text,Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+PRVDR_STATE_CD,dimension,Provider state code.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+PTNT_DSCHRG_STUS_CD,dimension,Patient discharge status code.,Keep as text,Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+RNDRNG_PHYSN_NPI,dimension,Rendering clinician National Provider Identifier.,Keep as text,Home Health Agency; Hospice; Outpatient; Skilled Nursing Facility
+RTI_RACE_CD,dimension,Research Triangle Institute race code.,Keep as text,Master Beneficiary Summary
+SEX_IDENT_CD,dimension,CMS sex identification code.,Keep as text,Master Beneficiary Summary
+STATE_CODE,dimension,Beneficiary state code.,Keep as text,Master Beneficiary Summary
+ZIP_CD,dimension,Beneficiary ZIP code; retain as text to preserve leading zeros.,Keep as text,Master Beneficiary Summary
+PROD_SRVC_ID,drug,"Product or service identifier, generally an NDC for Part D events.",Keep as text,Part D Event
+BENE_ID,key,Synthetic beneficiary identifier used to link enrollment and claims.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Master Beneficiary Summary; Outpatient; Part D Event; Skilled Nursing Facility
+CLM_ID,key,Claim identifier; it may repeat because a claim can contain multiple service lines.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+CLM_LINE_NUM,key,Institutional claim line number.,Keep as text,Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+LINE_NUM,key,Carrier or DME claim line number.,Keep as text,Carrier; Durable Medical Equipment
+PDE_ID,key,Unique Part D prescription drug event identifier.,Keep as text,Part D Event
+BENE_HI_CVRAGE_TOT_MONS,metric,Months of Part A hospital-insurance coverage in the reference year.,Convert to numeric after validation,Master Beneficiary Summary
+BENE_HMO_CVRAGE_TOT_MONS,metric,Months of HMO or managed-care coverage.,Convert to numeric after validation,Master Beneficiary Summary
+BENE_SMI_CVRAGE_TOT_MONS,metric,Months of Part B supplementary-medical-insurance coverage.,Convert to numeric after validation,Master Beneficiary Summary
+CLM_PMT_AMT,metric,Medicare payment amount at the claim level; deduplicate claim headers before aggregation.,Convert to numeric after validation,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+CLM_TOT_CHRG_AMT,metric,Total provider charge at the claim level; deduplicate claim headers before aggregation.,Convert to numeric after validation,Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility
+CLM_UTLZTN_DAY_CNT,metric,Utilization-day count reported on an institutional claim.,Convert to numeric after validation,Hospice; Inpatient; Skilled Nursing Facility
+CVRD_D_PLAN_PD_AMT,metric,Covered amount paid by the Part D plan.,Convert to numeric after validation,Part D Event
+DAYS_SUPLY_NUM,metric,Days of medication supply dispensed.,Convert to numeric after validation,Part D Event
+DUAL_ELGBL_MONS,metric,Months with Medicare-Medicaid dual eligibility.,Convert to numeric after validation,Master Beneficiary Summary
+LINE_ALOWD_CHRG_AMT,metric,Allowed charge amount at the service-line level.,Convert to numeric after validation,Carrier; Durable Medical Equipment
+LINE_BENE_PMT_AMT,metric,Beneficiary payment amount at the service-line level.,Convert to numeric after validation,Carrier; Durable Medical Equipment
+LINE_NCH_PMT_AMT,metric,Medicare payment amount at the service-line level.,Convert to numeric after validation,Carrier; Durable Medical Equipment
+LINE_SRVC_CNT,metric,Number of services represented by a carrier or DME line.,Convert to numeric after validation,Carrier; Durable Medical Equipment
+NCVRD_PLAN_PD_AMT,metric,Non-covered amount paid by the plan.,Convert to numeric after validation,Part D Event
+PTD_PLAN_CVRG_MONS,metric,Months of Part D plan coverage.,Convert to numeric after validation,Master Beneficiary Summary
+PTNT_PAY_AMT,metric,Amount paid by the patient for the Part D event.,Convert to numeric after validation,Part D Event
+QTY_DSPNSD_NUM,metric,Quantity dispensed for the Part D event.,Convert to numeric after validation,Part D Event
+REV_CNTR_TOT_CHRG_AMT,metric,Total charge amount for an institutional revenue-center line.,Convert to numeric after validation,Home Health Agency; Hospice; Outpatient; Skilled Nursing Facility
+TOT_RX_CST_AMT,metric,Total prescription cost for the Part D event.,Convert to numeric after validation,Part D Event
+HCPCS_CD,procedure,HCPCS procedure or service code reported on the claim line.,Keep as text,Carrier; Durable Medical Equipment; Home Health Agency; Hospice; Inpatient; Outpatient; Skilled Nursing Facility

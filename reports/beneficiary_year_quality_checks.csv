@@ -1,0 +1,21 @@
+check_name,severity,status,failed_rows_or_entities,population,failed_pct,details
+required_primary_key,error,PASS,0,86917,0.0,beneficiary_id and reference_year are required.
+unique_beneficiary_year,error,PASS,0,86917,0.0,Expected one row per beneficiary and reference year.
+filename_year_matches_record,error,PASS,0,86917,0.0,Reference year must match the year in the source filename.
+valid_birth_date,error,PASS,0,86917,0.0,Nonblank source values must parse using the CMS day-month-year format.
+valid_death_date,error,PASS,0,86917,0.0,Nonblank source values must parse using the CMS day-month-year format.
+valid_coverage_start_date,error,PASS,0,86917,0.0,Nonblank source values must parse using the CMS day-month-year format.
+birth_before_death,error,PASS,0,86917,0.0,Birth date must not occur after death date.
+plausible_age_range,error,PASS,0,86917,0.0,Age must be between 0 and 120 inclusive.
+age_above_110,warning,WARN,138,86917,0.1588,Retain valid source values but document ages above 110 in the synthetic data.
+age_matches_birth_year,warning,PASS,0,86917,0.0,Age at year end should equal reference year minus birth year.
+part_a_coverage_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+part_b_coverage_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+state_buyin_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+hmo_coverage_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+part_d_coverage_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+retiree_drug_subsidy_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+dual_eligible_months_range,error,PASS,0,86917,0.0,Coverage months must be between 0 and 12 inclusive.
+birth_date_consistent_across_years,error,PASS,0,10000,0.0,A beneficiary should not have multiple nonblank birth dates.
+age_progresses_across_consecutive_years,warning,PASS,0,76917,0.0,Age should increase by one across consecutive annual records.
+no_record_after_death_year,warning,PASS,0,86917,0.0,Review beneficiary-year records occurring after a reported death year.

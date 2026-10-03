@@ -1,0 +1,5 @@
+drg_group,reference_description,reference_version,source_url
+951,Other factors influencing health status,MS-DRG v37.0,https://www.cms.gov/icd10m/version37-fullcode-cms/fullcode_cms/P0026.html
+180,Respiratory neoplasms with MCC,MS-DRG v37.0,https://www.cms.gov/icd10m/version37-fullcode-cms/fullcode_cms/P0007.html
+181,Respiratory neoplasms with CC,MS-DRG v37.0,https://www.cms.gov/icd10m/version37-fullcode-cms/fullcode_cms/P0007.html
+182,Respiratory neoplasms without CC/MCC,MS-DRG v37.0,https://www.cms.gov/icd10m/version37-fullcode-cms/fullcode_cms/P0007.html

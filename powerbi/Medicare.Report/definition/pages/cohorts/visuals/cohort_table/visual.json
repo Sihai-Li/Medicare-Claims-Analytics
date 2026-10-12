@@ -1,0 +1,108 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "cohort_table",
+  "position": {
+    "x": 640,
+    "y": 435,
+    "width": 620,
+    "height": 220,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_cohort"
+                    }
+                  },
+                  "Property": "cohort_label"
+                }
+              },
+              "queryRef": "dim_cohort.cohort_label",
+              "nativeQueryRef": "cohort_label"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_year"
+                    }
+                  },
+                  "Property": "Medical Claim Count"
+                }
+              },
+              "queryRef": "dim_year.Medical Claim Count",
+              "nativeQueryRef": "Medical Claim Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_year"
+                    }
+                  },
+                  "Property": "Medical PMPM"
+                }
+              },
+              "queryRef": "dim_year.Medical PMPM",
+              "nativeQueryRef": "Medical PMPM"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_year"
+                    }
+                  },
+                  "Property": "30 Day All Cause Return Rate"
+                }
+              },
+              "queryRef": "dim_year.30 Day All Cause Return Rate",
+              "nativeQueryRef": "30 Day All Cause Return Rate"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cohort comparison'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

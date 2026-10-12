@@ -1,0 +1,93 @@
+table fact_patient_year
+	lineageTag: 786cd169-f119-4b6d-9187-6d2d418aba64
+
+	column beneficiary_year_key
+		dataType: string
+		lineageTag: bb6f4bfa-9ac5-4724-bfae-de0d82cbdfb5
+		summarizeBy: none
+		sourceColumn: beneficiary_year_key
+
+	column beneficiary_id
+		dataType: string
+		lineageTag: 78ad4ce9-c40c-468e-8d7f-a90d977318f1
+		summarizeBy: none
+		sourceColumn: beneficiary_id
+
+	column service_year
+		dataType: int64
+		lineageTag: 67044b5c-b4fe-42d0-938e-8a02d2a4b9b2
+		summarizeBy: none
+		sourceColumn: service_year
+
+	column cohort_key
+		dataType: string
+		lineageTag: 55b2202c-0d6a-4f9a-b205-54d0c8c7ae23
+		summarizeBy: none
+		sourceColumn: cohort_key
+
+	column age_band
+		dataType: string
+		lineageTag: b235c18e-7278-4bb4-8719-3d4bd03a5025
+		summarizeBy: none
+		sourceColumn: age_band
+
+	column sex_code
+		dataType: string
+		lineageTag: 1a5b04c2-4c2d-4719-8a83-875d7fade6ed
+		summarizeBy: none
+		sourceColumn: sex_code
+
+	column state_code
+		dataType: string
+		lineageTag: f1052437-482a-4683-97da-aa3100b5031b
+		summarizeBy: none
+		sourceColumn: state_code
+
+	column eligible_ffs_member_months
+		dataType: int64
+		lineageTag: 33ee0f00-9b0c-4217-ae44-8fa82e517460
+		summarizeBy: none
+		sourceColumn: eligible_ffs_member_months
+
+	column claim_count
+		dataType: int64
+		lineageTag: 4df26958-508a-4161-8d83-c2af0ca363de
+		summarizeBy: none
+		sourceColumn: claim_count
+
+	column base_payment
+		dataType: double
+		lineageTag: 0318b472-4b2f-4502-8917-8e96dbc9d0e1
+		summarizeBy: none
+		sourceColumn: base_payment
+
+	column inpatient_claim_count
+		dataType: int64
+		lineageTag: 80497f5a-1137-42a1-a1bc-d823a3191118
+		summarizeBy: none
+		sourceColumn: inpatient_claim_count
+
+	column eligible_index_episodes
+		dataType: int64
+		lineageTag: 6537f842-b9e3-4c3d-a974-67c85c79d18b
+		summarizeBy: none
+		sourceColumn: eligible_index_episodes
+
+	column readmissions
+		dataType: int64
+		lineageTag: 523888f4-ff8b-408b-8855-e13f4c11608f
+		summarizeBy: none
+		sourceColumn: readmissions
+
+	partition fact_patient_year = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_patient_year.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"beneficiary_year_key", type text}, {"beneficiary_id", type text}, {"service_year", Int64.Type}, {"cohort_key", type text}, {"age_band", type text}, {"sex_code", type text}, {"state_code", type text}, {"eligible_ffs_member_months", Int64.Type}, {"claim_count", Int64.Type}, {"base_payment", type number}, {"inpatient_claim_count", Int64.Type}, {"eligible_index_episodes", Int64.Type}, {"readmissions", Int64.Type}}, "en-US"),
+				    AnalysisPeriod = Table.SelectRows(Typed, each [service_year] >= 2016 and [service_year] <= 2022)
+				in
+				    AnalysisPeriod
+

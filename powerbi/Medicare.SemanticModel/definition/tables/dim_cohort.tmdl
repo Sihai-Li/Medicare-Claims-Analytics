@@ -1,0 +1,32 @@
+table dim_cohort
+	lineageTag: 500f95f3-47b6-470b-aadd-e0591f3c71f1
+
+	column cohort_key
+		dataType: string
+		lineageTag: adcb7513-6a03-444d-91c7-b3360aa96464
+		summarizeBy: none
+		sourceColumn: cohort_key
+
+	column cohort_label
+		dataType: string
+		lineageTag: 814c6e7f-cc23-4b95-9fd1-4a6279301101
+		summarizeBy: none
+		sourceColumn: cohort_label
+
+	column definition
+		dataType: string
+		lineageTag: 179c8e0d-3471-4b8e-a4f0-6cc70f6c5cc0
+		summarizeBy: none
+		sourceColumn: definition
+
+	partition dim_cohort = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_cohort.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"cohort_key", type text}, {"cohort_label", type text}, {"definition", type text}}, "en-US")
+				in
+				    Typed
+

@@ -1,0 +1,21 @@
+{
+  "evidence": "User-provided screenshots saved under powerbi/screenshots",
+  "all_three_pages_render_observed": true,
+  "selection_observed": "2016-2022 aggregate; 2022-only selection not shown",
+  "aggregate_checks": {
+    "medical_payment_862M_matches_861833419_59": true,
+    "medical_pmpm_1504_08_in_cohort_table_matches_SQL": true,
+    "medical_claim_count_470546_in_cohort_table_matches_SQL": true,
+    "rx_plan_payment_54M_matches_54260776_78": true,
+    "top_10_percent_share_65_8_matches_65_8462_percent": true,
+    "eligible_index_episodes_16372_matches_SQL": true,
+    "all_cause_return_rate_31_1_matches_31_1019_percent": true
+  },
+  "pending_query_changes_banner_observed": true,
+  "2022_filter_interaction_verified": true,
+  "user_confirmation": "After the 2022 filter instructions, user confirmed that two displayed numbers matched. The confirmation did not enumerate the metric names; do not claim every DAX measure was individually tested.",
+  "core_functional_acceptance": "Three pages render, displayed aggregate metrics reconcile, and user confirms two single-year values match. Functional scope can be closed; final project save remains a user action.",
+  "final_refresh_and_save_confirmed": false,
+  "full_desktop_acceptance_complete": false,
+  "layout_optimization_requested": false
+}

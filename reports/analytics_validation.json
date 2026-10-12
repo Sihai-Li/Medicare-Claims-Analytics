@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "beneficiary_year": 86917,
+    "member_month": 1043004,
+    "claim_header": 555218,
+    "claim_line": 1888860,
+    "prescription_event": 515520,
+    "stay_episode": 19846,
+    "fact_readmission": 19846
+  },
+  "claims_pde_source_rows": 2404380,
+  "distinct_beneficiaries": 10000,
+  "source_files": 19,
+  "checks": {
+    "claim_source_rows_preserved": true,
+    "prescription_source_rows_preserved": true,
+    "foreign_key_integrity": true,
+    "database_integrity": true,
+    "no_missing_member_months": true,
+    "line_header_referential_integrity": true,
+    "readmission_flags_only_on_eligible_index": true,
+    "every_inpatient_claim_in_episode_or_exception": true
+  }
+}

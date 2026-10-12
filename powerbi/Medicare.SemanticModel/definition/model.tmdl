@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_year","dim_service","dim_cohort","fact_member_month","fact_service_month","fact_readmission","fact_patient_year","fact_drg_year","fact_quality","DataFolder"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_year
+ref table dim_service
+ref table dim_cohort
+ref table fact_member_month
+ref table fact_service_month
+ref table fact_readmission
+ref table fact_patient_year
+ref table fact_drg_year
+ref table fact_quality
+

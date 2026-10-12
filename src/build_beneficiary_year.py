@@ -363,7 +363,7 @@ def write_quality_markdown(
 
 def export_sqlite(frame: pd.DataFrame, database_path: Path, ddl_path: Path) -> None:
     export_columns = [c for c in frame.columns if c != "source_year"]
-    database_path.unlink(missing_ok=True)
+    # Replace only beneficiary_year; retain claims and other analytical tables.
     with sqlite3.connect(database_path) as connection:
         connection.executescript(ddl_path.read_text(encoding="utf-8"))
         placeholders = ", ".join(["?"] * len(export_columns))

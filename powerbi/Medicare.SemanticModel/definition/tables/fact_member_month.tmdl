@@ -1,0 +1,63 @@
+table fact_member_month
+	lineageTag: 25377e0e-4a53-4d40-b81f-2a0c89af8319
+
+	column service_year
+		dataType: int64
+		lineageTag: 4258e5ca-626e-4262-b9bd-318a59b61840
+		summarizeBy: none
+		sourceColumn: service_year
+
+	column service_month
+		dataType: string
+		lineageTag: d72a4c96-3cbd-4b93-bb82-3885f0e7cc14
+		summarizeBy: none
+		sourceColumn: service_month
+
+	column cohort_key
+		dataType: string
+		lineageTag: 7ef71d06-f446-4b42-8a66-4f3c9fc79fe1
+		summarizeBy: none
+		sourceColumn: cohort_key
+
+	column age_band
+		dataType: string
+		lineageTag: e9503bf9-bd66-4b40-a3a6-c3133c977fae
+		summarizeBy: none
+		sourceColumn: age_band
+
+	column member_months
+		dataType: int64
+		lineageTag: ee43afaa-6301-485e-8a82-91abd68982d4
+		summarizeBy: none
+		sourceColumn: member_months
+
+	column eligible_ffs_member_months
+		dataType: int64
+		lineageTag: 3afeeabe-9ae5-462a-aa17-287177717f49
+		summarizeBy: none
+		sourceColumn: eligible_ffs_member_months
+
+	column eligible_part_d_member_months
+		dataType: int64
+		lineageTag: ac91aa14-576c-46e5-8617-3cf0e88662b1
+		summarizeBy: none
+		sourceColumn: eligible_part_d_member_months
+
+	column inferred_ffs_member_months
+		dataType: int64
+		lineageTag: ac834b6a-8451-4410-bf00-76e610cf4b8c
+		summarizeBy: none
+		sourceColumn: inferred_ffs_member_months
+
+	partition fact_member_month = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_member_month.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"service_year", Int64.Type}, {"service_month", type text}, {"cohort_key", type text}, {"age_band", type text}, {"member_months", Int64.Type}, {"eligible_ffs_member_months", Int64.Type}, {"eligible_part_d_member_months", Int64.Type}, {"inferred_ffs_member_months", Int64.Type}}, "en-US"),
+				    AnalysisPeriod = Table.SelectRows(Typed, each [service_year] >= 2016 and [service_year] <= 2022)
+				in
+				    AnalysisPeriod
+

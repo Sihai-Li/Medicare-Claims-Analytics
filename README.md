@@ -15,6 +15,48 @@ findings about actual Medicare beneficiaries.
 
 ## Current milestone
 
+The full portfolio pipeline now builds all seven medical service categories and
+Part D events, monthly eligibility proxies, descriptive annual cohorts, temporal
+inpatient episodes, and all-cause 30-day returns. It processes **2,404,380 source
+claim-line/PDE records across 19 files** and 10,000 distinct beneficiaries.
+Enrollment snapshots span 2015-2025; observed claims end in early 2023.
+The primary comparison period is 2016-2022.
+
+The three-page Power BI project contains Power Query imports, a star model, and
+19 explicit DAX measures. JSON schemas and field references have been checked;
+**All three pages have rendered in user-provided Desktop screenshots and aggregate
+values agree with SQL. The user has confirmed two matching single-year values after
+2022 filter instructions; core functional acceptance is complete. Final Desktop save
+remains a user action**. Evidence is under `powerbi/screenshots/` and
+`reports/powerbi_desktop_observation.json`.
+
+### Rebuild the complete model
+
+```powershell
+python src/build_analytics.py
+python src/build_powerbi_project.py
+python src/verify_analytics.py
+python -m unittest discover -s tests -v
+```
+
+The complete builder uses the Python standard library. Notebook/older scripts
+use the dependencies in `requirements.txt`. Outputs are `data/processed/analytics.sqlite`
+and `data/processed/powerbi/*.csv`. This rebuild preserves raw source files and
+the earlier notebook database `medicare_claims.sqlite`.
+
+Open `powerbi/Medicare_Analytics.pbip` in Power BI Desktop and refresh. Instructions
+and expected card values are in [powerbi/README.md](powerbi/README.md).
+
+Read [metric definitions](docs/metric_definitions.md) before interpreting outputs:
+monthly HMO fields are blank, so FFS denominators use explicit annual-information
+inference. Returns use temporal episode proxies and are not the CMS HWR measure.
+Raw exceptions are retained in SQLite; the exception CSV is a 5,000-row sample.
+
+See [resume evidence checklist](docs/resume_delivery_checklist.md) for verified
+deliverables, outstanding Desktop checks, and accurate scope wording.
+
+### Earlier milestones
+
 Milestone 1 profiles every local CSV and ZIP file and produces:
 
 - a dataset-level inventory and quality summary;

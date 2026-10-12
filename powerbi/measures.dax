@@ -1,0 +1,61 @@
+Medical Claim Payment =
+CALCULATE(SUM(fact_service_month[base_payment]), KEEPFILTERS(dim_service[service_category] <> "pde"))
+
+Medical Claim Count =
+CALCULATE(SUM(fact_service_month[record_count]), KEEPFILTERS(dim_service[service_category] <> "pde"))
+
+Rx Plan Payment =
+CALCULATE(SUM(fact_service_month[base_payment]), KEEPFILTERS(dim_service[service_category] = "pde"))
+
+Eligible FFS Member Months =
+SUM(fact_member_month[eligible_ffs_member_months])
+
+Eligible Part D Member Months =
+SUM(fact_member_month[eligible_part_d_member_months])
+
+Medical PMPM =
+DIVIDE([Medical Claim Payment], [Eligible FFS Member Months])
+
+Rx Plan PMPM =
+DIVIDE([Rx Plan Payment], [Eligible Part D Member Months])
+
+Claims per 1000 Member Years =
+DIVIDE([Medical Claim Count] * 12000, [Eligible FFS Member Months])
+
+Paid to Charge Ratio =
+DIVIDE(SUM(fact_service_month[matched_payment]), SUM(fact_service_month[matched_charge]))
+
+Mean Inpatient Date Span =
+DIVIDE(CALCULATE(SUM(fact_service_month[date_span_days]), KEEPFILTERS(dim_service[service_category] = "inpatient")), CALCULATE(SUM(fact_service_month[claims_with_date_span]), KEEPFILTERS(dim_service[service_category] = "inpatient")))
+
+Eligible Index Episodes =
+SUM(fact_readmission[eligible_index])
+
+30 Day Readmitted Episodes =
+SUM(fact_readmission[readmitted_30d])
+
+30 Day All Cause Return Rate =
+DIVIDE([30 Day Readmitted Episodes], [Eligible Index Episodes])
+
+Temporal Episodes =
+COUNTROWS(fact_readmission)
+
+DRG Claim Payment =
+SUM(fact_drg_year[base_payment])
+
+DRG Claim Count =
+SUM(fact_drg_year[claim_count])
+
+Annual Medical Payment per Eligible Member =
+DIVIDE(SUM(fact_patient_year[base_payment]), CALCULATE(COUNTROWS(fact_patient_year), fact_patient_year[eligible_ffs_member_months] > 0))
+
+Top 10 Percent Member Payment Share =
+DIVIDE(
+ SUMX(VALUES(dim_year[service_year]),
+     VAR Patients = FILTER(CALCULATETABLE(fact_patient_year), fact_patient_year[eligible_ffs_member_months] > 0)
+     VAR N = ROUNDUP(COUNTROWS(Patients) * 0.10, 0)
+     RETURN SUMX(TOPN(N, Patients, fact_patient_year[base_payment], DESC, fact_patient_year[beneficiary_id], ASC), fact_patient_year[base_payment])
+ ), SUM(fact_patient_year[base_payment]))
+
+Quality Exceptions All Source Years =
+SUM(fact_quality[exception_count])

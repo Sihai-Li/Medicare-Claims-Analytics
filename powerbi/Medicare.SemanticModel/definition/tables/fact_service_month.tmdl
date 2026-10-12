@@ -1,0 +1,111 @@
+table fact_service_month
+	lineageTag: 2799f660-5d91-4fb4-b4a0-bdecaf88365e
+
+	column service_year
+		dataType: int64
+		lineageTag: d059f801-5526-4469-a22e-27140753826d
+		summarizeBy: none
+		sourceColumn: service_year
+
+	column service_month
+		dataType: string
+		lineageTag: 7e7cb875-03e1-4343-ae4c-dd4c22a9d569
+		summarizeBy: none
+		sourceColumn: service_month
+
+	column service_category
+		dataType: string
+		lineageTag: c32053c9-607f-421b-9f99-8a7f1ff1fb74
+		summarizeBy: none
+		sourceColumn: service_category
+
+	column cohort_key
+		dataType: string
+		lineageTag: 2e7e7d66-7d0c-47f7-9dbf-8bc6b92d9211
+		summarizeBy: none
+		sourceColumn: cohort_key
+
+	column age_band
+		dataType: string
+		lineageTag: 40f933c5-7f4f-4dcf-b464-5e7d083f4b19
+		summarizeBy: none
+		sourceColumn: age_band
+
+	column record_count
+		dataType: int64
+		lineageTag: ec28036c-2ea9-4e4a-9818-8cf769f01f54
+		summarizeBy: none
+		sourceColumn: record_count
+
+	column base_payment
+		dataType: double
+		lineageTag: 5ac9795d-bfc9-430a-911c-afe8ecfaff9a
+		summarizeBy: none
+		sourceColumn: base_payment
+
+	column total_medicare_payment
+		dataType: double
+		lineageTag: 002fdf15-12fb-4ece-8b62-eee1d476a231
+		summarizeBy: none
+		sourceColumn: total_medicare_payment
+
+	column charges
+		dataType: double
+		lineageTag: 19aefbd0-a51f-45c9-a9d9-b2fac74ee111
+		summarizeBy: none
+		sourceColumn: charges
+
+	column records_with_charge
+		dataType: int64
+		lineageTag: e9956826-5cc3-4931-9268-ce9dc648c30e
+		summarizeBy: none
+		sourceColumn: records_with_charge
+
+	column matched_payment
+		dataType: double
+		lineageTag: 49d966be-253e-45c1-b665-babbb368fcdc
+		summarizeBy: none
+		sourceColumn: matched_payment
+
+	column matched_charge
+		dataType: double
+		lineageTag: 589f7eb8-c221-4dfa-96bc-1e16067724d3
+		summarizeBy: none
+		sourceColumn: matched_charge
+
+	column date_span_days
+		dataType: int64
+		lineageTag: b6227235-f381-45d1-897f-1cc0da1b1495
+		summarizeBy: none
+		sourceColumn: date_span_days
+
+	column claims_with_date_span
+		dataType: int64
+		lineageTag: c7f8459a-c89b-4847-b1e5-492a4ab7d857
+		summarizeBy: none
+		sourceColumn: claims_with_date_span
+
+	column covered_days
+		dataType: int64
+		lineageTag: 1a688d6c-2637-4a72-ad6f-68a5b9308e00
+		summarizeBy: none
+		sourceColumn: covered_days
+
+	column drug_total_cost
+		dataType: double
+		lineageTag: 3b861359-7c50-4730-a5ed-a18de393aba0
+		summarizeBy: none
+		sourceColumn: drug_total_cost
+
+	partition fact_service_month = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_service_month.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"service_year", Int64.Type}, {"service_month", type text}, {"service_category", type text}, {"cohort_key", type text}, {"age_band", type text}, {"record_count", Int64.Type}, {"base_payment", type number}, {"total_medicare_payment", type number}, {"charges", type number}, {"records_with_charge", Int64.Type}, {"matched_payment", type number}, {"matched_charge", type number}, {"date_span_days", Int64.Type}, {"claims_with_date_span", Int64.Type}, {"covered_days", Int64.Type}, {"drug_total_cost", type number}}, "en-US"),
+				    AnalysisPeriod = Table.SelectRows(Typed, each [service_year] >= 2016 and [service_year] <= 2022)
+				in
+				    AnalysisPeriod
+

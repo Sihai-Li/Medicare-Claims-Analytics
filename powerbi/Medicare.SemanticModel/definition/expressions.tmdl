@@ -1,0 +1,5 @@
+expression DataFolder = "D:/projects/Medicare Claims Analytics/data/processed/powerbi/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d8e2af85-d8e7-445d-a94a-651283a084ca
+
+	annotation PBI_ResultType = Text
+

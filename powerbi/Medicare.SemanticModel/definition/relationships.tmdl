@@ -1,0 +1,40 @@
+relationship f63358ef-99a9-5aac-9045-801fb652e732
+	fromColumn: fact_member_month.service_year
+	toColumn: dim_year.service_year
+
+relationship 9d1e3ef7-e25e-5fd2-83eb-fd6f1e653bc9
+	fromColumn: fact_member_month.cohort_key
+	toColumn: dim_cohort.cohort_key
+
+relationship 06e280ba-613c-5aaa-be37-54eac484e5af
+	fromColumn: fact_service_month.service_year
+	toColumn: dim_year.service_year
+
+relationship eb52aa9a-b364-5085-911a-4a8258d3bcaf
+	fromColumn: fact_service_month.service_category
+	toColumn: dim_service.service_category
+
+relationship 4ae2242c-78aa-55b2-8368-6f246ed563af
+	fromColumn: fact_service_month.cohort_key
+	toColumn: dim_cohort.cohort_key
+
+relationship 93dfd637-cbe3-5885-ad61-8f13e08dca6a
+	fromColumn: fact_readmission.service_year
+	toColumn: dim_year.service_year
+
+relationship d8192e8c-6ec9-5c86-8ca2-c5ba31fdd372
+	fromColumn: fact_readmission.cohort_key
+	toColumn: dim_cohort.cohort_key
+
+relationship beb40887-511e-5a89-94da-916c7a73bfb4
+	fromColumn: fact_patient_year.service_year
+	toColumn: dim_year.service_year
+
+relationship f3cea5f9-3963-5136-98a6-1297768c9035
+	fromColumn: fact_patient_year.cohort_key
+	toColumn: dim_cohort.cohort_key
+
+relationship d3577971-2e69-5234-b6cb-6747f9762c4d
+	fromColumn: fact_drg_year.service_year
+	toColumn: dim_year.service_year
+

@@ -1,0 +1,16 @@
+dataset,check_name,exception_count
+beneficiary,annual_monthly_coverage_disagreement,4972
+beneficiary,monthly_hmo_unavailable,86917
+carrier,claim_outside_eligible_FFS_month,506
+dme,claim_header_conflict,96
+dme,claim_outside_eligible_FFS_month,2262
+dme,missing_or_nonpositive_charge,18034
+hha,claim_outside_eligible_FFS_month,25
+hospice,claim_outside_eligible_FFS_month,213
+hospice,missing_beneficiary_year,1
+inpatient,claim_outside_eligible_FFS_month,1542
+inpatient,los_utilization_difference,1572
+outpatient,claim_outside_eligible_FFS_month,26197
+pde,event_outside_eligible_part_D_month,36645
+snf,claim_outside_eligible_FFS_month,389
+snf,los_utilization_difference,1632

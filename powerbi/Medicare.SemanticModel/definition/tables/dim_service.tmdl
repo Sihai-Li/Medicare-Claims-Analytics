@@ -1,0 +1,32 @@
+table dim_service
+	lineageTag: 34e92807-88fe-497f-b24e-af1d27f43687
+
+	column service_category
+		dataType: string
+		lineageTag: ca6ca3db-f244-473d-b2c5-a69682915827
+		summarizeBy: none
+		sourceColumn: service_category
+
+	column service_label
+		dataType: string
+		lineageTag: e76d26b9-9c03-4e43-bf41-09e27dff472c
+		summarizeBy: none
+		sourceColumn: service_label
+
+	column record_unit
+		dataType: string
+		lineageTag: d1403a16-f718-4e07-b07a-28ecb65fb668
+		summarizeBy: none
+		sourceColumn: record_unit
+
+	partition dim_service = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_service.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"service_category", type text}, {"service_label", type text}, {"record_unit", type text}}, "en-US")
+				in
+				    Typed
+

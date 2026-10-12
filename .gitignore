@@ -24,3 +24,7 @@ venv/
 # Operating system files.
 .DS_Store
 Thumbs.db
+
+# Power BI machine-local data caches.
+**/.pbi/
+*.abf

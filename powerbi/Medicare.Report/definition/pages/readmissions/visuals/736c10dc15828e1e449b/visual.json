@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "736c10dc15828e1e449b",
+  "position": {
+    "x": 100,
+    "y": 135,
+    "z": 1,
+    "height": 265,
+    "width": 300,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_year"
+                    }
+                  },
+                  "Property": "service_year"
+                }
+              },
+              "queryRef": "dim_year.service_year",
+              "nativeQueryRef": "service_year"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "58b06b2ed30f687c807f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_year"
+              }
+            },
+            "Property": "service_year"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

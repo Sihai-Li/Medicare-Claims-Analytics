@@ -1,0 +1,128 @@
+table dim_year
+	lineageTag: 7406b856-9c68-41a9-a46a-98c3e2ba9691
+
+	measure 'Medical Claim Payment' = CALCULATE(SUM(fact_service_month[base_payment]), KEEPFILTERS(dim_service[service_category] <> "pde"))
+		formatString: $#,0
+		displayFolder: Portfolio metrics
+		lineageTag: ca39277f-52e9-41ae-9285-89db6324efdc
+
+	measure 'Medical Claim Count' = CALCULATE(SUM(fact_service_month[record_count]), KEEPFILTERS(dim_service[service_category] <> "pde"))
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 2c552ad6-20d0-4032-a605-c1331dc9e946
+
+	measure 'Rx Plan Payment' = CALCULATE(SUM(fact_service_month[base_payment]), KEEPFILTERS(dim_service[service_category] = "pde"))
+		formatString: $#,0
+		displayFolder: Portfolio metrics
+		lineageTag: 41db3b55-8eec-4311-bae5-ac8d66173a2c
+
+	measure 'Eligible FFS Member Months' = SUM(fact_member_month[eligible_ffs_member_months])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 452a69a0-537e-4c99-9ad1-dcd8ea3c2a5f
+
+	measure 'Eligible Part D Member Months' = SUM(fact_member_month[eligible_part_d_member_months])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 8e2fa33f-6dc0-4520-a4c1-d9b5a011cb3d
+
+	measure 'Medical PMPM' = DIVIDE([Medical Claim Payment], [Eligible FFS Member Months])
+		formatString: $#,0.00
+		displayFolder: Portfolio metrics
+		lineageTag: 39b54ffb-586f-423f-baa7-ca5d68086125
+
+	measure 'Rx Plan PMPM' = DIVIDE([Rx Plan Payment], [Eligible Part D Member Months])
+		formatString: $#,0.00
+		displayFolder: Portfolio metrics
+		lineageTag: 5c7d09f0-51f8-4783-97ba-a2a5b4280c94
+
+	measure 'Claims per 1000 Member Years' = DIVIDE([Medical Claim Count] * 12000, [Eligible FFS Member Months])
+		formatString: #,0.0
+		displayFolder: Portfolio metrics
+		lineageTag: 4f6a1bbb-8f1b-4e37-9a0d-c097b479273f
+
+	measure 'Paid to Charge Ratio' = DIVIDE(SUM(fact_service_month[matched_payment]), SUM(fact_service_month[matched_charge]))
+		formatString: 0.0%
+		displayFolder: Portfolio metrics
+		lineageTag: 5a98623c-7a0a-4c9b-944a-8599118ad1f9
+
+	measure 'Mean Inpatient Date Span' = DIVIDE(CALCULATE(SUM(fact_service_month[date_span_days]), KEEPFILTERS(dim_service[service_category] = "inpatient")), CALCULATE(SUM(fact_service_month[claims_with_date_span]), KEEPFILTERS(dim_service[service_category] = "inpatient")))
+		formatString: 0.00
+		displayFolder: Portfolio metrics
+		lineageTag: 3d8f2a34-0e72-4ea5-80ac-dda738b326ba
+
+	measure 'Eligible Index Episodes' = SUM(fact_readmission[eligible_index])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: dc4bb3c6-f32f-47f4-b43f-320ce00e7e64
+
+	measure '30 Day Readmitted Episodes' = SUM(fact_readmission[readmitted_30d])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 500d1415-d64a-4bcf-9ab5-5da3e27e706c
+
+	measure '30 Day All Cause Return Rate' = DIVIDE([30 Day Readmitted Episodes], [Eligible Index Episodes])
+		formatString: 0.0%
+		displayFolder: Portfolio metrics
+		lineageTag: 003a16d0-91a9-4708-a21a-6910e674b7e0
+
+	measure 'Temporal Episodes' = COUNTROWS(fact_readmission)
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 327ef79b-e849-445a-9bbe-02d24c1a724c
+
+	measure 'DRG Claim Payment' = SUM(fact_drg_year[base_payment])
+		formatString: $#,0
+		displayFolder: Portfolio metrics
+		lineageTag: c2e633c3-bd3e-432a-afdf-de1033142292
+
+	measure 'DRG Claim Count' = SUM(fact_drg_year[claim_count])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 2ee8d485-d5ff-4137-a35f-12458cc600e0
+
+	measure 'Annual Medical Payment per Eligible Member' = DIVIDE(SUM(fact_patient_year[base_payment]), CALCULATE(COUNTROWS(fact_patient_year), fact_patient_year[eligible_ffs_member_months] > 0))
+		formatString: $#,0
+		displayFolder: Portfolio metrics
+		lineageTag: b67db95f-7ee0-4f12-bc84-338bb39a4f58
+
+	measure 'Top 10 Percent Member Payment Share' =
+			DIVIDE(
+			 SUMX(VALUES(dim_year[service_year]),
+			     VAR Patients = FILTER(CALCULATETABLE(fact_patient_year), fact_patient_year[eligible_ffs_member_months] > 0)
+			     VAR N = ROUNDUP(COUNTROWS(Patients) * 0.10, 0)
+			     RETURN SUMX(TOPN(N, Patients, fact_patient_year[base_payment], DESC, fact_patient_year[beneficiary_id], ASC), fact_patient_year[base_payment])
+			 ), SUM(fact_patient_year[base_payment]))
+		formatString: 0.0%
+		displayFolder: Portfolio metrics
+		lineageTag: 657f53c4-b795-4592-95c7-3d8efd7f9e97
+
+	measure 'Quality Exceptions All Source Years' = SUM(fact_quality[exception_count])
+		formatString: #,0
+		displayFolder: Portfolio metrics
+		lineageTag: 4e897b71-56ac-493d-a1b4-9a2b439d0ccb
+
+	column service_year
+		dataType: int64
+		lineageTag: 7a2f72c8-5d21-4a39-9f8d-5986381d9465
+		summarizeBy: none
+		sourceColumn: service_year
+
+	column coverage_label
+		dataType: string
+		lineageTag: 5248bd54-cad7-4ca5-977f-f1d6813b40b6
+		summarizeBy: none
+		sourceColumn: coverage_label
+
+	partition dim_year = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_year.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Nulls = Table.ReplaceValue(Headers, "", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"service_year", Int64.Type}, {"coverage_label", type text}}, "en-US"),
+				    AnalysisPeriod = Table.SelectRows(Typed, each [service_year] >= 2016 and [service_year] <= 2022)
+				in
+				    AnalysisPeriod
+

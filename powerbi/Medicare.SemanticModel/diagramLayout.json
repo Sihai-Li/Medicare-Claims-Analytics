@@ -1,0 +1,130 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 621.04547296772625,
+            "y": 302.89674828159434
+          },
+          "nodeIndex": "dim_cohort",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.60199338071959,
+            "y": 245.60927880410804
+          },
+          "nodeIndex": "dim_service",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 777.22963411183082,
+            "y": 507.7737590774143
+          },
+          "nodeIndex": "dim_year",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1013.9391733805314,
+            "y": 861.24118193118727
+          },
+          "nodeIndex": "fact_drg_year",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1123.4761573995625,
+            "y": 303.52107819316632
+          },
+          "nodeIndex": "fact_member_month",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 490.25002527103084,
+            "y": 720.54519531382186
+          },
+          "nodeIndex": "fact_patient_year",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1357.4761573995625,
+            "y": 503.62059096559358
+          },
+          "nodeIndex": "fact_quality",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 890.05011173536559,
+            "y": -50
+          },
+          "nodeIndex": "fact_readmission",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 331.84419223788711
+          },
+          "nodeIndex": "fact_service_month",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
